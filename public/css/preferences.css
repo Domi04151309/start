@@ -128,13 +128,14 @@ main {
 }
 
 input:not([type="checkbox"]),
+textarea,
 button,
 a,
 .btn {
   transition-duration: var(--transition-duration);
 }
 
-input:not([type="checkbox"]), button, .btn {
+input:not([type="checkbox"]), textarea, button, .btn {
   box-sizing: border-box;
   display: inline-block;
   background: var(--elevated-color);
@@ -146,6 +147,15 @@ input:not([type="checkbox"]), button, .btn {
   border-radius: var(--border-radius);
   border: 1px solid var(--hover-color);
   outline: none;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 256px;
+  overflow-y: auto;
+  resize: none;
+  field-sizing: content;
 }
 
 input:not([type="checkbox"]):focus-visible {
@@ -221,8 +231,6 @@ input[type="range"]::-moz-range-thumb {
   background: var(--accent-color);
 }
 
-/* --- */
-
 .button-bar {
   display: flex;
   flex-wrap: wrap;
@@ -265,6 +273,10 @@ img {
     display: grid;
     grid-template-columns: repeat(2, 2fr);
     gap: 32px;
+  }
+
+  .grid-v-span {
+    grid-row: span 2;
   }
 
   section:first-child, section:nth-child(5) {

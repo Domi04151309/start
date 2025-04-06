@@ -1,5 +1,6 @@
+/* eslint-disable max-lines */
 import './service-worker-registration.js';
-import { INVALID_LAYOUT } from './common.js';
+import { DEFAULT_PICKS, INVALID_LAYOUT } from './common.js';
 
 const nameText = document.getElementById('nameText');
 const nameInput = document.getElementById('nameInput');
@@ -10,6 +11,7 @@ const blurInput = document.getElementById('blurInput');
 const fontInput = document.getElementById('fontInput');
 const weatherInput = document.getElementById('weatherInput');
 const picksInput = document.getElementById('picksInput');
+const picksDataInput = document.getElementById('picksData');
 
 /**
  * @returns {void}
@@ -178,6 +180,34 @@ function setPicks() {
 /**
  * @returns {void}
  */
+function setPicksData() {
+  if (
+    !(picksDataInput instanceof HTMLTextAreaElement)
+  ) throw new Error(INVALID_LAYOUT);
+
+  localStorage.setItem(
+    'picksData',
+    picksDataInput.value.length > 0
+      ? picksDataInput.value
+      : DEFAULT_PICKS
+  );
+}
+
+/**
+ * @param {string} string
+ * @returns {string}
+ */
+function formatJson(string) {
+  try {
+    return JSON.stringify(JSON.parse(string), null, 2);
+  } catch {
+    return string;
+  }
+}
+
+/**
+ * @returns {void}
+ */
 function initialize() {
   const name = localStorage.getItem('name');
   const background = localStorage.getItem('background');
@@ -186,6 +216,7 @@ function initialize() {
   const font = localStorage.getItem('font');
   const weather = localStorage.getItem('weather') === 'true';
   const picks = localStorage.getItem('picks') === 'true';
+  const picksData = localStorage.getItem('picksData');
 
   if (
     nameText instanceof Node &&
@@ -235,6 +266,10 @@ function initialize() {
   if (
     picksInput instanceof HTMLInputElement
   ) picksInput.checked = picks;
+
+  if (
+    picksDataInput instanceof HTMLTextAreaElement
+  ) picksDataInput.value = formatJson(picksData ?? DEFAULT_PICKS);
 }
 
 /**
@@ -279,7 +314,12 @@ function registerListeners() {
   picksInput?.addEventListener('change', () => {
     setPicks();
   });
+
+  picksDataInput?.addEventListener('change', () => {
+    setPicksData();
+  });
 }
 
 initialize();
 registerListeners();
+/* eslint-enable max-lines */

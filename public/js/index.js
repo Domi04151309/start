@@ -1,5 +1,5 @@
 import './service-worker-registration.js';
-import { INVALID_LAYOUT } from './common.js';
+import { DEFAULT_PICKS, INVALID_LAYOUT } from './common.js';
 
 const timeText = document.getElementById('time');
 const messageText = document.getElementById('message');
@@ -77,19 +77,37 @@ if (weather) try {
 }
 
 if (picks) {
-  const QUICK_PICKS = [
-    { color: '#FF0000', href: 'https://www.youtube.com/', title: 'YouTube' },
-    { color: '#B20710', href: 'https://www.netflix.com/', title: 'Netflix' },
-    { color: '#01147C', href: 'https://www.disneyplus.com/', title: 'Disney+' }
-  ];
+  /** @type {Record<string, unknown?>[]} */
+  let picksData;
+  try {
+    const storedPicksData = JSON.parse(
+      localStorage.getItem('picksData') ?? DEFAULT_PICKS
+    );
+    if (!Array.isArray(storedPicksData)) throw new Error(
+      'Stored data is not an array.'
+    );
+
+    picksData = storedPicksData;
+  } catch (error) {
+    picksData = [
+      {
+        color: '#000',
+        href: './preferences',
+        title: error instanceof Error ? error.message : error?.toString()
+      }
+    ];
+  }
 
   const nodes = [];
-  for (const pick of QUICK_PICKS) {
+  for (const pick of picksData) {
     const link = document.createElement('a');
-    link.title = pick.title;
-    link.textContent = pick.title;
-    link.href = pick.href;
-    link.style.setProperty('--color', pick.color);
+    link.title = typeof pick.title === 'string' ? pick.title : 'Unknown';
+    link.textContent = typeof pick.title === 'string' ? pick.title : '?';
+    link.href = typeof pick.href === 'string' ? pick.href : '#';
+    link.style.setProperty(
+      '--color',
+      typeof pick.color === 'string' ? pick.color : '#000'
+    );
 
     nodes.push(link);
   }
