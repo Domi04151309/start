@@ -1,9 +1,10 @@
+import './service-worker-registration.js';
 import { INVALID_LAYOUT } from './common.js';
 
-const nameText = document.getElementById('name');
+const nameText = document.getElementById('nameText');
 const nameInput = document.getElementById('nameInput');
-const backgroundImage = document.getElementById('background');
-const backgroundFile = document.getElementById('bgFile');
+const backgroundImage = document.getElementById('backgroundImage');
+const backgroundFile = document.getElementById('backgroundFile');
 const colorInput = document.getElementById('colorInput');
 const blurInput = document.getElementById('blurInput');
 const fontInput = document.getElementById('fontInput');

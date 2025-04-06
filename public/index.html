@@ -1,16 +1,14 @@
----
----
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Start</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/index.css" />
-    <link rel="icon" href="{{ site.baseurl }}/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="icon" href="./favicon.ico">
     <meta name="theme-color" content="#000000">
     <meta name="description" content="A simple home page for your browser">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
+    <link rel="manifest" href="./pwa/manifest.json">
   </head>
   <body>
     <div class="center">
@@ -18,42 +16,11 @@
       <p id="message">Message</p>
       <small id="weather"></small>
     </div>
-    <a href="{{ site.baseurl }}/preferences" id="pref" aria-label="Settings">
-      <svg width="4vh" height="4vh" viewBox="0 0 20 20">
-          <path fill="var(--text-color)" d="M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z" />
+    <a href="./preferences" id="preferences" aria-label="Settings">
+      <svg width="4vh" height="4vh" viewBox="0 -960 960 960">
+          <path fill="var(--text-color)" d="M435.69-100q-20.46 0-35.34-13.58-14.89-13.57-18.12-33.42l-9.77-74.85q-16.07-5.38-32.96-15.07-16.88-9.7-30.19-20.77L240-228.23q-18.85 8.31-37.88 1.61-19.04-6.69-29.58-24.3l-45.08-78.16q-10.54-17.61-6.07-37.27 4.46-19.65 20.46-32.42l59.92-45q-1.38-8.92-1.96-17.92-.58-9-.58-17.93 0-8.53.58-17.34t1.96-19.27l-59.92-45q-16-12.77-20.27-32.62-4.27-19.84 6.27-37.46l44.69-77q10.54-17.23 29.58-24.11 19.03-6.89 37.88 1.42l68.92 29.08q14.47-11.46 30.89-20.96t32.27-15.27L382.23-813q3.23-19.85 18.12-33.42Q415.23-860 435.69-860h88.62q20.46 0 35.34 13.58 14.89 13.57 18.12 33.42l9.77 75.23q18 6.54 32.57 15.27 14.58 8.73 29.43 20.58L720.39-731q18.84-8.31 37.88-1.42 19.04 6.88 29.57 24.11l44.7 77.39q10.54 17.61 6.07 37.27-4.46 19.65-20.46 32.42l-61.46 46.15q2.15 9.69 2.35 18.12.19 8.42.19 16.96 0 8.15-.39 16.58-.38 8.42-2.76 19.27l60.3 45.38q16 12.77 20.66 32.42 4.65 19.66-5.89 37.27l-45.31 77.77q-10.53 17.62-29.76 24.31-19.23 6.69-38.08-1.62l-68.46-29.46q-14.85 11.85-30.31 20.96-15.46 9.12-31.69 14.89L577.77-147q-3.23 19.85-18.12 33.42Q544.77-100 524.31-100h-88.62Zm44.77-260q49.92 0 84.96-35.04 35.04-35.04 35.04-84.96 0-49.92-35.04-84.96Q530.38-600 480.46-600q-50.54 0-85.27 35.04T360.46-480q0 49.92 34.73 84.96Q429.92-360 480.46-360Z" />
       </svg>
     </a>
-    <script src="{{ site.baseurl }}/js/index.js" type="module"></script>
-    <script>
-      let newWorker;
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('{{ site.baseurl }}/sw.js').then( registration => {
-             registration.addEventListener('updatefound', () => {
-              newWorker = registration.installing;
-              newWorker.addEventListener('statechange', () => {
-                switch (newWorker.state) {
-                  case 'installed':
-                    if (navigator.serviceWorker.controller) {
-                      newWorker.postMessage({ action: 'skipWaiting' });
-                    }
-                    break;
-                }
-              });
-            });
-            console.log('ServiceWorker registration successful');
-          }, err => {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-        });
-
-        let refreshing;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          window.location.reload();
-          refreshing = true;
-        });
-      }
-    </script>
+    <script src="./js/index.js" type="module"></script>
   </body>
 </html>

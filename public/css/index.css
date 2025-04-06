@@ -64,7 +64,7 @@ small {
   font-size: 2vw;
 }
 
-#pref {
+#preferences {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -74,6 +74,6 @@ small {
   transition:transform .8s ease-in-out;
 }
 
-#pref:hover {
+#preferences:hover {
   transform: rotate(180deg);
 }

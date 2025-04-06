@@ -1,20 +1,18 @@
----
----
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Start</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/preferences.css" />
-    <link rel="icon" href="{{ site.baseurl }}/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./css/preferences.css" />
+    <link rel="icon" href="./favicon.ico">
     <meta name="theme-color" content="#000000">
     <meta name="description" content="A simple home page for your browser">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
+    <link rel="manifest" href="./pwa/manifest.json">
   </head>
   <body>
     <header>
-      <a href="{{ site.baseurl }}/" class="back" aria-label="Back"></a>
+      <a href="./" class="back" aria-label="Back"></a>
       <h1>Settings</h1>
     </header>
     <main>
@@ -22,7 +20,7 @@
         <h2>Your Name</h2>
         <p>
           Your name will be used to personalize the welcome message.
-          Currently the custom name is <span id="name">not set</span>.
+          Currently the custom name is <span id="nameText">not set</span>.
           You can enter a name below.
         </p>
         <input type="text" id="nameInput" placeholder="Your name" aria-label="Your Name">
@@ -33,7 +31,7 @@
           You can upload a custom background image that will be used on the page.
           You can see the current background image below.
         </p>
-        <label class="input-file"><input id="bgFile" type="file">Upload image</input></label>
+        <label class="input-file"><input id="backgroundFile" type="file">Upload image</input></label>
         <button id="randomBg" type="button">Random background</button>
         <button id="delBg" type="button">Reset background</button>
         <p>
@@ -41,7 +39,7 @@
         </p>
       </section>
       <section id="img-container">
-        <img id="background" src="{{ site.baseurl }}/images/bg.jpg" alt="Preview of your background">
+        <img id="backgroundImage" src="./images/bg.jpg" alt="Preview of your background">
       </section>
       <section>
         <h2>Background Blur</h2>
@@ -84,42 +82,11 @@
         <h2>About</h2>
         <p>
           A simple customizable homepage for your browser.<br>
-          Icons by <a href="https://icons8.com/">Icons8</a> and <a href="https://material.io/resources/icons/">Google</a><br>
+          Icons by <a href="https://icons8.com/">Icons8</a> and <a href="https://fonts.google.com/icons">Google</a><br>
           Background image by <a href="https://unsplash.com/photos/R4y_E5ZQDPg">Cristina Gottardi on Unsplash</a>
         </p>
       </section>
     </main>
-    <script src="{{ site.baseurl }}/js/preferences.js" type="module"></script>
-    <script>
-      let newWorker;
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('{{ site.baseurl }}/sw.js').then( registration => {
-             registration.addEventListener('updatefound', () => {
-              newWorker = registration.installing;
-              newWorker.addEventListener('statechange', () => {
-                switch (newWorker.state) {
-                  case 'installed':
-                    if (navigator.serviceWorker.controller) {
-                      newWorker.postMessage({ action: 'skipWaiting' });
-                    }
-                    break;
-                }
-              });
-            });
-            console.log('ServiceWorker registration successful');
-          }, err => {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-        });
-
-        let refreshing;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          window.location.reload();
-          refreshing = true;
-        });
-      }
-    </script>
+    <script src="./js/preferences.js" type="module"></script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+import './service-worker-registration.js';
 import { INVALID_LAYOUT } from './common.js';
 
 const timeText = document.getElementById('time');
