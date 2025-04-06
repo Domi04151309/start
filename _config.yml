@@ -1,7 +1,1 @@
-exclude:
-- node_modules
-- tsconfig.json
-- package-lock.json
-- package.json
-- README.md
-- tsconfig.json
+source: public

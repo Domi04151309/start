@@ -223,7 +223,7 @@ export default ts.config(
   },
   // General configuration.
   {
-    ignores: ['_site/*', 'sw.js']
+    ignores: ['_site/*', '**/sw.js']
   },
   {
     languageOptions: {
