@@ -3,6 +3,16 @@
   --text-color: #fff;
   --blur: 0;
   --font: sans-serif;
+
+  --font-size-big: 12vw;
+  --font-size-medium: 4vw;
+  --font-size-small: 2vw;
+}
+
+.with-picks {
+  --font-size-big: 6vw;
+  --font-size-medium: 2vw;
+  --font-size-small: 1vw;
 }
 
 * {
@@ -49,16 +59,50 @@ body {
 }
 
 h1 {
-  font-size: 12vw;
+  font-size: var(--font-size-big);
 }
 
 p {
-  font-size: 4vw;
+  font-size: var(--font-size-medium);
   margin: 0 0 1vw
 }
 
 small {
-  font-size: 2vw;
+  font-size: var(--font-size-small);
+}
+
+#picks {
+  display: flex;
+  width: 75vw;
+  margin: 5vw 0;
+  gap: 2vw;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#picks > a {
+  display: block;
+  height: 8vw;
+  line-height: 8vw;
+  font-size: 1vw;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color) 75%, white),
+    var(--color),
+    color-mix(in srgb, var(--color) 75%, black)
+  );;
+  color: #fff;
+  text-decoration: none;
+  aspect-ratio: 16/9;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition-duration: .3s;
+}
+
+#picks > a:focus-visible,
+#picks > a:hover {
+  scale: 1.1;
 }
 
 #preferences {
@@ -73,4 +117,8 @@ small {
 
 #preferences:hover {
   transform: rotate(180deg);
+}
+
+.hidden {
+  display: none !important;
 }

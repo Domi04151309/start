@@ -9,9 +9,9 @@ const colorInput = document.getElementById('colorInput');
 const blurInput = document.getElementById('blurInput');
 const fontInput = document.getElementById('fontInput');
 const weatherInput = document.getElementById('weatherInput');
+const picksInput = document.getElementById('picksInput');
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function setName() {
@@ -25,7 +25,6 @@ function setName() {
 }
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function setBackground() {
@@ -89,7 +88,6 @@ async function randomBackground() {
 }
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function resetBackground() {
@@ -102,7 +100,6 @@ function resetBackground() {
 }
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function setTextColor() {
@@ -114,7 +111,6 @@ function setTextColor() {
 }
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function setBlur() {
@@ -145,7 +141,6 @@ function loadFont(font) {
 }
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function setFont() {
@@ -159,7 +154,6 @@ function setFont() {
 }
 
 /**
- * @throws {Error}
  * @returns {void}
  */
 function setWeather() {
@@ -173,6 +167,17 @@ function setWeather() {
 /**
  * @returns {void}
  */
+function setPicks() {
+  if (
+    !(picksInput instanceof HTMLInputElement)
+  ) throw new Error(INVALID_LAYOUT);
+
+  localStorage.setItem('picks', picksInput.checked.toString());
+}
+
+/**
+ * @returns {void}
+ */
 function initialize() {
   const name = localStorage.getItem('name');
   const background = localStorage.getItem('background');
@@ -180,6 +185,7 @@ function initialize() {
   const blur = localStorage.getItem('blur');
   const font = localStorage.getItem('font');
   const weather = localStorage.getItem('weather') === 'true';
+  const picks = localStorage.getItem('picks') === 'true';
 
   if (
     nameText instanceof Node &&
@@ -225,6 +231,10 @@ function initialize() {
   if (
     weatherInput instanceof HTMLInputElement
   ) weatherInput.checked = weather;
+
+  if (
+    picksInput instanceof HTMLInputElement
+  ) picksInput.checked = picks;
 }
 
 /**
@@ -264,6 +274,10 @@ function registerListeners() {
 
   weatherInput?.addEventListener('change', () => {
     setWeather();
+  });
+
+  picksInput?.addEventListener('change', () => {
+    setPicks();
   });
 }
 

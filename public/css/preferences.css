@@ -302,4 +302,8 @@ img {
   section:nth-child(8) {
     order: 7;
   }
+
+  section:nth-child(9) {
+    order: 8;
+  }
 }
