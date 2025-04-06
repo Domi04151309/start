@@ -18,6 +18,7 @@ function logText(action) {
   const element = document.createElement('p');
   element.innerHTML = action;
   element.classList.add('log');
+
   document.body.append(element);
   setTimeout(() => {
     element.remove();
@@ -33,6 +34,7 @@ function setName() {
     !(nameText instanceof Node) ||
     !(nameInput instanceof HTMLInputElement)
   ) throw new Error(INVALID_LAYOUT);
+
   localStorage.setItem('name', nameInput.value);
   nameText.innerHTML = nameInput.value.length > 0 ? nameInput.value : 'not set';
 }
@@ -47,15 +49,21 @@ function setBackground() {
   ) throw new Error(INVALID_LAYOUT);
   if (backgroundFile.files !== null && backgroundFile.files.length > 0) {
     const reader = new FileReader();
+
     reader.readAsDataURL(backgroundFile.files[0]);
+
     reader.addEventListener('load', () => {
       if (typeof reader.result !== 'string') throw new Error('Invalid result.');
+
       localStorage.setItem('background', reader.result);
+
       if (
         !(backgroundImage instanceof HTMLImageElement)
       ) throw new Error(INVALID_LAYOUT);
+
       backgroundImage.src = reader.result;
     });
+
     reader.addEventListener('error', error => {
       logText(`Error: ${error.toString()}`);
     });
@@ -72,15 +80,21 @@ async function randomBackground() {
     );
     const blob = await request.blob();
     const reader = new FileReader();
+
     reader.readAsDataURL(blob);
+
     reader.addEventListener('load', () => {
       if (typeof reader.result !== 'string') throw new Error('Invalid result.');
+
       localStorage.setItem('background', reader.result);
+
       if (
         !(backgroundImage instanceof HTMLImageElement)
       ) throw new Error(INVALID_LAYOUT);
+
       backgroundImage.src = reader.result;
     });
+
     reader.addEventListener('error', error => {
       logText(`Error: ${error.toString()}`);
     });
@@ -97,6 +111,7 @@ function resetBackground() {
   if (
     !(backgroundImage instanceof HTMLImageElement)
   ) throw new Error(INVALID_LAYOUT);
+
   localStorage.removeItem('background');
   backgroundImage.src = './images/bg.jpg';
   logText('Reset background');
@@ -110,6 +125,7 @@ function setTextColor() {
   if (
     !(colorInput instanceof HTMLInputElement)
   ) throw new Error(INVALID_LAYOUT);
+
   localStorage.setItem('text-color', colorInput.value);
 }
 
@@ -122,6 +138,7 @@ function setBlur() {
     !(blurInput instanceof HTMLInputElement) ||
     !(backgroundImage instanceof Node)
   ) throw new Error(INVALID_LAYOUT);
+
   localStorage.setItem('blur', blurInput.value);
   backgroundImage.style.filter = `blur(${
     (Number.parseInt(blurInput.value, 10) / 100).toString()
@@ -139,6 +156,7 @@ function loadFont(font) {
   link.href = `https://fonts.googleapis.com/css?family=${
     encodeURIComponent(font)
   }`;
+
   document.getElementsByTagName('head')[0].append(link);
 }
 
@@ -150,6 +168,7 @@ function setFont() {
   if (
     !(fontInput instanceof HTMLInputElement)
   ) throw new Error(INVALID_LAYOUT);
+
   localStorage.setItem('font', fontInput.value);
   loadFont(fontInput.value);
   fontInput.style.fontFamily = `"${fontInput.value}"`;
@@ -163,78 +182,106 @@ function setWeather() {
   if (
     !(weatherInput instanceof HTMLInputElement)
   ) throw new Error(INVALID_LAYOUT);
+
   localStorage.setItem('weather', weatherInput.checked.toString());
 }
 
+/**
+ * @returns {void}
+ */
+function initialize() {
+  const name = localStorage.getItem('name');
+  const background = localStorage.getItem('background');
+  const textColor = localStorage.getItem('text-color');
+  const blur = localStorage.getItem('blur');
+  const font = localStorage.getItem('font');
+  const weather = localStorage.getItem('weather') === 'true';
 
-const name = localStorage.getItem('name');
-const background = localStorage.getItem('background');
-const textColor = localStorage.getItem('text-color');
-const blur = localStorage.getItem('blur');
-const font = localStorage.getItem('font');
-const weather = localStorage.getItem('weather') === 'true';
+  if (
+    nameText instanceof Node &&
+    nameInput instanceof HTMLInputElement &&
+    name !== null &&
+    name.length > 0
+  ) {
+    nameText.innerHTML = name;
+    nameInput.value = name;
+  }
 
-if (
-  nameText instanceof Node &&
-  nameInput instanceof HTMLInputElement &&
-  name !== null &&
-  name.length > 0
-) {
-  nameText.innerHTML = name;
-  nameInput.value = name;
-}
-if (
-  backgroundImage instanceof HTMLImageElement &&
-  background !== null
-) backgroundImage.src = background;
-if (
-  colorInput instanceof HTMLInputElement &&
-  textColor !== null
-) colorInput.value = textColor;
-if (
-  blurInput instanceof HTMLInputElement &&
-  backgroundImage instanceof Node &&
-  blur !== null
-) {
-  blurInput.value = blur;
-  backgroundImage.style.filter = `blur(${
-    (Number.parseInt(blur, 10) / 100).toString()
-  }vh)`;
-}
-if (
-  fontInput instanceof HTMLInputElement &&
-  font !== null &&
-  font.length > 0
-) {
-  fontInput.value = font;
-  loadFont(font);
-  fontInput.style.fontFamily = `"${fontInput.value}"`;
-}
-if (
-  weatherInput instanceof HTMLInputElement
-) weatherInput.checked = weather;
+  if (
+    backgroundImage instanceof HTMLImageElement &&
+    background !== null
+  ) backgroundImage.src = background;
 
-nameInput?.addEventListener('change', () => {
-  setName();
-});
-backgroundFile?.addEventListener('change', () => {
-  setBackground();
-});
-document.getElementById('randomBg')?.addEventListener('click', async () => {
-  await randomBackground();
-});
-document.getElementById('delBg')?.addEventListener('click', () => {
-  resetBackground();
-});
-blurInput?.addEventListener('change', () => {
-  setBlur();
-});
-colorInput?.addEventListener('change', () => {
-  setTextColor();
-});
-fontInput?.addEventListener('change', () => {
-  setFont();
-});
-weatherInput?.addEventListener('change', () => {
-  setWeather();
-});
+  if (
+    colorInput instanceof HTMLInputElement &&
+    textColor !== null
+  ) colorInput.value = textColor;
+
+  if (
+    blurInput instanceof HTMLInputElement &&
+    backgroundImage instanceof Node &&
+    blur !== null
+  ) {
+    blurInput.value = blur;
+    backgroundImage.style.filter = `blur(${
+      (Number.parseInt(blur, 10) / 100).toString()
+    }vh)`;
+  }
+
+  if (
+    fontInput instanceof HTMLInputElement &&
+    font !== null &&
+    font.length > 0
+  ) {
+    fontInput.value = font;
+    loadFont(font);
+    fontInput.style.fontFamily = `"${fontInput.value}"`;
+  }
+
+  if (
+    weatherInput instanceof HTMLInputElement
+  ) weatherInput.checked = weather;
+}
+
+/**
+ * @returns {void}
+ */
+function registerListeners() {
+  nameInput?.addEventListener('change', () => {
+    setName();
+  });
+
+  backgroundFile?.addEventListener('change', () => {
+    setBackground();
+  });
+
+  document.getElementById('randomBackground')?.addEventListener(
+    'click',
+    async () => {
+      await randomBackground();
+    }
+  );
+
+  document.getElementById('resetBackground')?.addEventListener('click', () => {
+    resetBackground();
+  });
+
+  blurInput?.addEventListener('change', () => {
+    setBlur();
+  });
+
+  colorInput?.addEventListener('change', () => {
+    setTextColor();
+  });
+
+  fontInput?.addEventListener('change', () => {
+    setFont();
+  });
+
+  weatherInput?.addEventListener('change', () => {
+    setWeather();
+  });
+}
+
+initialize();
+registerListeners();

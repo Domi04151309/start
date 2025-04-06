@@ -1,5 +1,5 @@
 :root {
-  --bg: url("../images/bg.jpg");
+  --background: url("../images/bg.jpg");
   --text-color: #fff;
   --blur: 0;
   --font: sans-serif;
@@ -13,19 +13,16 @@ html {
   height: 100%;
   font-family: var(--font);
   color: var(--text-color);
-  background: #000 center/cover var(--bg) no-repeat;
+  background: #000 center/cover var(--background) no-repeat;
 }
 
 html::before {
   content: "";
   position: fixed;
-  left: 0;
-  right: 0;
+  inset: 0;
   z-index: -1;
   display: block;
-  background: #000 center/cover var(--bg) no-repeat;
-  width: 100%;
-  height: 100%;
+  background: #000 center/cover var(--background) no-repeat;
   -webkit-filter: blur(var(--blur));
   -moz-filter: blur(var(--blur));
   -o-filter: blur(var(--blur));

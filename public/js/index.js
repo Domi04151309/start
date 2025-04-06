@@ -4,6 +4,14 @@ import { INVALID_LAYOUT } from './common.js';
 const timeText = document.getElementById('time');
 const messageText = document.getElementById('message');
 const weatherText = document.getElementById('weather');
+
+const mainStyle = document.documentElement.style;
+const background = localStorage.getItem('background');
+const textColor = localStorage.getItem('text-color');
+const blur = localStorage.getItem('blur');
+const font = localStorage.getItem('font');
+const weather = localStorage.getItem('weather') === 'true';
+
 let date, hour, message, minute;
 
 /**
@@ -14,9 +22,11 @@ function startTime() {
   if (
     timeText === null || messageText === null
   ) throw new Error(INVALID_LAYOUT);
+
   date = new Date();
   hour = date.getHours();
   minute = date.getMinutes();
+
   if (minute < 10) minute = `0${minute.toString()}`;
   timeText.innerHTML = `${hour.toString()}:${minute.toString()}`;
 
@@ -25,29 +35,27 @@ function startTime() {
   else if (hour < 18) message = 'Good Afternoon';
   else if (hour < 22) message = 'Good Evening';
   else if (hour < 25) message = 'Good Night';
+
   messageText.innerHTML = `${
     [
       message,
       localStorage.getItem('name') ?? ''
     ].filter(name => name.length > 0).join(', ')
   }.`;
+
   setTimeout(startTime, 60_000);
 }
 
-const mainStyle = document.documentElement.style;
-const background = localStorage.getItem('background');
-const textColor = localStorage.getItem('text-color');
-const blur = localStorage.getItem('blur');
-const font = localStorage.getItem('font');
-const weather = localStorage.getItem('weather') === 'true';
-
 if (background !== null) mainStyle.setProperty(
-  '--bg', `url(${background})`
+  '--background', `url(${background})`
 );
+
 if (textColor !== null) mainStyle.setProperty('--text-color', textColor);
+
 if (blur !== null) mainStyle.setProperty(
   '--blur', `${(Number.parseInt(blur, 10) / 100).toString()}vh`
 );
+
 if (font !== null && font.length > 0) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
