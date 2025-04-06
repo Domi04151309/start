@@ -11,21 +11,6 @@ const fontInput = document.getElementById('fontInput');
 const weatherInput = document.getElementById('weatherInput');
 
 /**
- * @param {string} action
- * @returns {void}
- */
-function logText(action) {
-  const element = document.createElement('p');
-  element.innerHTML = action;
-  element.classList.add('log');
-
-  document.body.append(element);
-  setTimeout(() => {
-    element.remove();
-  }, 3000);
-}
-
-/**
  * @throws {Error}
  * @returns {void}
  */
@@ -65,7 +50,7 @@ function setBackground() {
     });
 
     reader.addEventListener('error', error => {
-      logText(`Error: ${error.toString()}`);
+      console.warn(error);
     });
   }
 }
@@ -96,10 +81,10 @@ async function randomBackground() {
     });
 
     reader.addEventListener('error', error => {
-      logText(`Error: ${error.toString()}`);
+      console.warn(error);
     });
   } catch (error) {
-    if (error instanceof Error) logText(`Error: ${error.toString()}`);
+    console.warn(error);
   }
 }
 
@@ -114,7 +99,6 @@ function resetBackground() {
 
   localStorage.removeItem('background');
   backgroundImage.src = './images/bg.jpg';
-  logText('Reset background');
 }
 
 /**

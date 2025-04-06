@@ -12,7 +12,7 @@
   </head>
   <body>
     <header>
-      <a href="./" class="back" aria-label="Back"></a>
+      <a href="./" class="link-back" aria-label="Back"></a>
       <h1>Settings</h1>
     </header>
     <main>
@@ -23,7 +23,7 @@
           Currently the custom name is <span id="nameText">not set</span>.
           You can enter a name below.
         </p>
-        <input type="text" id="nameInput" placeholder="Your name" aria-label="Your Name">
+        <input type="text" id="nameInput" placeholder="Your name" aria-label="Your Name" class="w-100">
       </section>
       <section>
         <h2>Background Image</h2>
@@ -31,9 +31,11 @@
           You can upload a custom background image that will be used on the page.
           You can see the current background image below.
         </p>
-        <label class="input-file"><input id="backgroundFile" type="file">Upload image</input></label>
-        <button id="randomBackground" type="button">Random background</button>
-        <button id="resetBackground" type="button">Reset background</button>
+        <div class="button-bar">
+          <label class="btn"><input id="backgroundFile" type="file">Upload image</input></label>
+          <button id="randomBackground" type="button">Random background</button>
+          <button id="resetBackground" type="button">Reset background</button>
+        </div>
         <p>
           The random background feature uses Unsplash to get images. Read their <a href="https://unsplash.com/privacy">privacy policy</a> for further information.
         </p>
@@ -46,7 +48,7 @@
         <p>
           Adjust the amount of blur on the background image with the slider below.
         </p>
-        <input type="range" id="blurInput" value="0" aria-label="Background blur">
+        <input type="range" id="blurInput" value="0" aria-label="Background blur" class="w-100">
       </section>
       <section>
         <h2>Text Color</h2>
@@ -54,14 +56,14 @@
           You can set a custom text color that will be used on the page.
           Click the box below to choose a color.
         </p>
-        <input type="color" id="colorInput" value="#ffffff" aria-label="Text color">
+        <input type="color" id="colorInput" value="#ffffff" aria-label="Text color" class="w-100">
       </section>
       <section>
         <h2>Font</h2>
         <p>
           You can enter a custom font that will be used on the page.
         </p>
-        <input type="text" id="fontInput" aria-label="Custom Font">
+        <input type="text" id="fontInput" aria-label="Custom Font" class="w-100">
         <p>
           The font feature uses Google Fonts. Read their <a href="https://developers.google.com/fonts/faq/privacy">privacy policy</a> for further information.
         </p>
