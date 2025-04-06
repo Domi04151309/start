@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "es2022",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "outDir": "/tmp/domi/",
+    "noEmit": true,
     "allowJs": true,
     "checkJs": true,
     "strict": true

@@ -16,18 +16,20 @@ function startTime() {
   date = new Date();
   hour = date.getHours();
   minute = date.getMinutes();
-  if (minute < 10) minute = '0' + minute;
-  timeText.innerHTML = hour + ':' + minute;
+  if (minute < 10) minute = `0${minute.toString()}`;
+  timeText.innerHTML = `${hour.toString()}:${minute.toString()}`;
 
   message = 'Hello';
   if (hour < 12) message = 'Good Morning';
   else if (hour < 18) message = 'Good Afternoon';
   else if (hour < 22) message = 'Good Evening';
   else if (hour < 25) message = 'Good Night';
-  messageText.innerHTML = [
-    message,
-    localStorage.getItem('name') ?? ''
-  ].filter(name => name.length > 0).join(', ') + '.';
+  messageText.innerHTML = `${
+    [
+      message,
+      localStorage.getItem('name') ?? ''
+    ].filter(name => name.length > 0).join(', ')
+  }.`;
   setTimeout(startTime, 60_000);
 }
 
@@ -39,20 +41,21 @@ const font = localStorage.getItem('font');
 const weather = localStorage.getItem('weather') === 'true';
 
 if (background !== null) mainStyle.setProperty(
-  '--bg', 'url(' + background + ')'
+  '--bg', `url(${background})`
 );
 if (textColor !== null) mainStyle.setProperty('--text-color', textColor);
 if (blur !== null) mainStyle.setProperty(
-  '--blur', (parseInt(blur, 10) / 100).toString() + 'vh'
+  '--blur', `${(Number.parseInt(blur, 10) / 100).toString()}vh`
 );
 if (font !== null && font.length > 0) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = 'https://fonts.googleapis.com/css?family=' +
-    encodeURIComponent(font);
+  link.href = `https://fonts.googleapis.com/css?family=${
+    encodeURIComponent(font)
+  }`;
   document.getElementsByTagName('head')[0].append(link);
-  mainStyle.setProperty('--font', '"' + font + '"');
+  mainStyle.setProperty('--font', `"${font}"`);
 }
 
 if (weather) try {

@@ -1,18 +1,21 @@
 :root {
-  --bg: url(../images/bg.jpg);
-  --text-color: #ffffff;
+  --bg: url("../images/bg.jpg");
+  --text-color: #fff;
   --blur: 0;
   --font: sans-serif;
 }
+
 * {
   margin: 0;
 }
+
 html {
   height: 100%;
   font-family: var(--font);
   color: var(--text-color);
   background: #000 center/cover var(--bg) no-repeat;
 }
+
 html::before {
   content: "";
   position: fixed;
@@ -29,9 +32,11 @@ html::before {
   -ms-filter: blur(var(--blur));
   filter: blur(var(--blur));
 }
+
 body {
   height: 100%;
 }
+
 .center {
   position: absolute;
   top: 50%;
@@ -40,20 +45,25 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
 .center > * {
   font-weight: bold;
   line-height: 1;
 }
+
 h1 {
   font-size: 12vw;
 }
+
 p {
   font-size: 4vw;
   margin: 0 0 1vw
 }
+
 small {
   font-size: 2vw;
 }
+
 #pref {
   position: fixed;
   bottom: 0;
@@ -63,6 +73,7 @@ small {
   margin: 16px;
   transition:transform .8s ease-in-out;
 }
+
 #pref:hover {
   transform: rotate(180deg);
 }

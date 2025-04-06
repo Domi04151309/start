@@ -56,7 +56,7 @@ function setBackground() {
       backgroundImage.src = reader.result;
     });
     reader.addEventListener('error', error => {
-      logText('Error: ' + error.toString());
+      logText(`Error: ${error.toString()}`);
     });
   }
 }
@@ -81,10 +81,10 @@ async function randomBackground() {
       backgroundImage.src = reader.result;
     });
     reader.addEventListener('error', error => {
-      logText('Error: ' + error.toString());
+      logText(`Error: ${error.toString()}`);
     });
   } catch (error) {
-    if (error instanceof Error) logText('Error: ' + error.toString());
+    if (error instanceof Error) logText(`Error: ${error.toString()}`);
   }
 }
 
@@ -122,9 +122,9 @@ function setBlur() {
     !(backgroundImage instanceof Node)
   ) throw new Error(INVALID_LAYOUT);
   localStorage.setItem('blur', blurInput.value);
-  backgroundImage.style.filter = 'blur(' + (
-    parseInt(blurInput.value, 10) / 100
-  ).toString() + 'vh)';
+  backgroundImage.style.filter = `blur(${
+    (Number.parseInt(blurInput.value, 10) / 100).toString()
+  }vh)`;
 }
 
 /**
@@ -135,8 +135,9 @@ function loadFont(font) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = 'https://fonts.googleapis.com/css?family=' +
-    encodeURIComponent(font);
+  link.href = `https://fonts.googleapis.com/css?family=${
+    encodeURIComponent(font)
+  }`;
   document.getElementsByTagName('head')[0].append(link);
 }
 
@@ -150,7 +151,7 @@ function setFont() {
   ) throw new Error(INVALID_LAYOUT);
   localStorage.setItem('font', fontInput.value);
   loadFont(fontInput.value);
-  fontInput.style.fontFamily = '"' + fontInput.value + '"';
+  fontInput.style.fontFamily = `"${fontInput.value}"`;
 }
 
 /**
@@ -195,9 +196,9 @@ if (
   blur !== null
 ) {
   blurInput.value = blur;
-  backgroundImage.style.filter = 'blur(' + (
-    parseInt(blur, 10) / 100
-  ).toString() + 'vh)';
+  backgroundImage.style.filter = `blur(${
+    (Number.parseInt(blur, 10) / 100).toString()
+  }vh)`;
 }
 if (
   fontInput instanceof HTMLInputElement &&
@@ -206,7 +207,7 @@ if (
 ) {
   fontInput.value = font;
   loadFont(font);
-  fontInput.style.fontFamily = '"' + fontInput.value + '"';
+  fontInput.style.fontFamily = `"${fontInput.value}"`;
 }
 if (
   weatherInput instanceof HTMLInputElement
